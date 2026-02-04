@@ -39,7 +39,7 @@ jobs:
           id: increment_version
           env:
             BRANCH_NAME: ${{ github.ref_name }}
-          uses: archesproject/reusable-github-workflows/.github/actions/my-python-action@main
+          uses: archesproject/reusable-github-workflows/.github/actions/run-release-prep-script@main
 
         - name: Configure git
           run: |
