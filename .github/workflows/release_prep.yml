@@ -39,8 +39,7 @@ jobs:
           id: increment_version
           env:
             BRANCH_NAME: ${{ github.ref_name }}
-          run: |
-            python .github/scripts/release_prep.py
+          uses: ./.github/actions/run-release-prep-script
 
         - name: Configure git
           run: |

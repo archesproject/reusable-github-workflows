@@ -1,0 +1,9 @@
+name: "Release prep action"
+description: "Run a script to update an apps toml file in preparation for a release"
+runs:
+  using: "composite"
+  steps:
+    - name: Prep release
+      shell: bash
+      run: |
+        python "${{ github.action_path }}/release_prep.py"
