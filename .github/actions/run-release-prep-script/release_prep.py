@@ -26,7 +26,7 @@ def increment_version(current: Version, branch: str) -> str:
                 f"{current.base_version}{current.pre[0]}{current.pre[1] + 1}"
             )
         else:
-            return Version(f"{current.base_version}{pre}0")
+            return Version(f"{current.major}.{current.minor + 1}.{0}{pre}0")
     else:
         match branch:
             case "release_major":
