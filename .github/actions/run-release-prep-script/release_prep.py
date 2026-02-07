@@ -8,6 +8,8 @@ from pyproject_parser import PyProject
 def get_latest_published_version(package: str) -> Version:
     url = f"https://pypi.org/pypi/{package}/json"
     resp = requests.get(url, timeout=5)
+    if resp.status_code == 404:
+        return
     resp.raise_for_status()
     data = resp.json()
     versions = list(data["releases"].keys())
