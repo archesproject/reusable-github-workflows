@@ -49,8 +49,18 @@ jobs:
         run: |
           VERSION=$(python - << 'EOF'
           import tomllib, pathlib
+          from packaging.version import Version
           data = tomllib.loads(pathlib.Path("pyproject.toml").read_text())
-          print(data["project"]["version"])
+          v = Version(data["project"]["version"])
+          base = f"{v.major}.{v.minor}.{v.micro}"
+          if v.pre:
+              kind, num = v.pre
+              base += f"-{{'a': 'alpha', 'b': 'beta', 'rc': 'rc'}[kind]}.{num}"
+          if v.dev is not None:
+              base += f"-dev.{v.dev}"
+          if v.post is not None:
+              base += f"+post.{v.post}"
+          print(base)
           EOF
           )
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
