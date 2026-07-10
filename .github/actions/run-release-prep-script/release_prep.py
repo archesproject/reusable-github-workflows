@@ -56,7 +56,7 @@ def update_pyproject():
     )
     current_dev_status = pyproject.project["classifiers"][dev_status_index]
 
-    if "Inactive" not in current_dev_status:
+    if current_dev_status != "Development Status :: 7 - Inactive":
         match current_branch:
             case "release_alpha":
                 dev_status = "Development Status :: 3 - Alpha"
