@@ -46,14 +46,6 @@ def update_pyproject():
     pyproject = PyProject.load(toml_file)
     current_branch = os.getenv("BRANCH_NAME")
 
-    match current_branch:
-        case "release_alpha":
-            dev_status = "Development Status :: 3 - Alpha"
-        case "release_beta":
-            dev_status = "Development Status :: 4 - Beta"
-        case _:
-            dev_status = "Development Status :: 5 - Production/Stable"
-
     dev_status_index = next(
         (
             idx
@@ -62,7 +54,18 @@ def update_pyproject():
         ),
         0,
     )
-    pyproject.project["classifiers"][dev_status_index] = dev_status
+    current_dev_status = pyproject.project["classifiers"][dev_status_index]
+
+    if current_dev_status != "Development Status :: 7 - Inactive":
+        match current_branch:
+            case "release_alpha":
+                dev_status = "Development Status :: 3 - Alpha"
+            case "release_beta":
+                dev_status = "Development Status :: 4 - Beta"
+            case _:
+                dev_status = "Development Status :: 5 - Production/Stable"
+        pyproject.project["classifiers"][dev_status_index] = dev_status
+
     latest_published_version = get_latest_published_version(pyproject.project["name"])
     pyproject.project["version"] = increment_version(
         latest_published_version, current_branch
