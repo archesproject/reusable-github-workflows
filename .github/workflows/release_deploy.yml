@@ -56,7 +56,7 @@ jobs:
           if v.pre:
               kind, num = v.pre
               base += f"-{{'a': 'alpha', 'b': 'beta', 'rc': 'rc'}[kind]}.{num}"
-            if v.dev is not None:
+          if v.dev is not None:
               raise SystemExit("Dev versions are not supported for release tags")
           if v.post is not None:
               base += f"+post.{v.post}"
