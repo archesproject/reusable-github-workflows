@@ -52,10 +52,11 @@ jobs:
           from packaging.version import Version
           data = tomllib.loads(pathlib.Path("pyproject.toml").read_text())
           v = Version(data["project"]["version"])
+          prerelease_labels = {"a": "alpha", "b": "beta", "rc": "rc"}
           base = f"{v.major}.{v.minor}.{v.micro}"
           if v.pre:
               kind, num = v.pre
-              base += f"-{{'a': 'alpha', 'b': 'beta', 'rc': 'rc'}[kind]}.{num}"
+              base += f"-{prerelease_labels[kind]}.{num}"
           if v.dev is not None:
               raise SystemExit("Dev versions are not supported for release tags")
           if v.post is not None:
